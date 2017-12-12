@@ -1,0 +1,17 @@
+    <% include ./partials/header %>
+    <div class="container">
+        <header class="jumbotron">
+                <h5>List of campgrounds:</h5>
+        </header>
+
+        
+        <a href="/campgrounds/new">Add a new Camp Ground</a>
+
+        <div>
+            <% campgrounds.forEach((campsite) => { %>
+                <h4> <%= campsite.name %> </h4>
+                <img src= "<%= campsite.image%>" class="img-thumbnail" alt="">
+            <% }); %>
+        </div>      
+    </div>
+      <% include ./partials/footer %>
