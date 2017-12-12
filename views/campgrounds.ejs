@@ -1,17 +1,28 @@
     <% include ./partials/header %>
     <div class="container">
         <header class="jumbotron">
-                <h5>List of campgrounds:</h5>
+            <div class="container">
+                <h5>Browse our list of campgrounds!</h5>
+                <p>A brief selection of campgrounds from around the world</p>
+                <p>
+                    <a href="/campgrounds/new" class="btn-sm btn-primary">Add a new Camp Ground</a>
+                </p>
+            </div>
         </header>
 
         
-        <a href="/campgrounds/new">Add a new Camp Ground</a>
+        
 
-        <div>
+        <div class="row">
             <% campgrounds.forEach((campsite) => { %>
-                <h4> <%= campsite.name %> </h4>
-                <img src= "<%= campsite.image%>" class="img-thumbnail" alt="">
+                <div class="col-lg-2 col-md-3 col-sm-6">
+                    <div class="thumbnail">
+                        <img src= "<%= campsite.image%>" alt="">
+                        <div class="caption">
+                            <h4> <%= campsite.name %> </h4>
+                        </div>
+                    </div>
+                </div>      
             <% }); %>
-        </div>      
-    </div>
+        </div>
       <% include ./partials/footer %>
