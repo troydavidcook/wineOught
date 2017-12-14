@@ -6,9 +6,14 @@ img {
     max-width: 400px;
 }
 
-h4 {
+.create-new {
     text-align: center;
-    margin: 20px auto 30px auto;
+    margin: 15px auto 30px auto;
+}
+
+.new-form {
+    width: 30%;
+    margin: 0 auto;
 }
 
 .row {
@@ -16,16 +21,11 @@ h4 {
     flex-wrap: wrap;
 }
 
-.new-form {
-    margin: 15px auto;
-    width: 30%;
-}
-
-.new-form, h3 {
+/* .new-form, h3 {
     margin: 0 auto;
 }
 
 .new-form, a {
     margin: 0 auto;
-}
-
+    padding-right: 10px;
+} */

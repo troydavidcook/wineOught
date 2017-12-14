@@ -12,7 +12,7 @@
 
         
         
-
+                <!-- 'Campsite is what's passed in, in the forEach, hence the ejs templating. -->
         <div class="row">
             <% campgrounds.forEach((campsite) => { %>
                 <div class="col-lg-2 col-md-3 col-sm-6">
@@ -21,6 +21,9 @@
                         <div class="caption">
                             <h4> <%= campsite.name %> </h4>
                         </div>
+                        <p>
+                            <a href="/campgrounds/<%= campsite._id %>" class="btn btn-primary btn-xs">More Info</a>
+                        </p>
                     </div>
                 </div>      
             <% }); %>

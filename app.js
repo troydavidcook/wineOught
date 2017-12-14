@@ -1,7 +1,12 @@
-const express = require("express");
-const path = require("path")
+const express    = require("express");
+const path       = require("path")
 const bodyParser = require("body-parser");
-const app = express();
+const app        = express();
+const mongoose   = require("mongoose");
+const mongoDb    = require("mongodb");
+
+mongoose.Promise = global.Promise;
+mongoose.connect("mongodb://localhost/yelp_camp",{useMongoClient: true});
 
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -9,20 +14,13 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 app.set("view engine", "ejs");
 
-var campgrounds = [
-    { name: "Big River", image: "http://www.diabetes.org/assets/img/community/camp/night-camp-fire.jpg"},
-    { name: "Bents Camp", image: "http://bents-camp.com/2016/wp-content/uploads/2016/05/Bents-Camp-edited.jpg"},
-    { name: "Milky Way Camp", image: "https://media.wired.com/photos/599b4cfd4fa6fc733c11e30d/master/pass/iStock-820873602.jpg"},
-    { name: "Wilderness Camp", image: "http://www.wilderness-safaris.com/media/Camps/Botswana/Kwetsani%20Camp/10.CampGallery/kwetsani-galth.jpg"},
-    { name: "Big River", image: "http://www.diabetes.org/assets/img/community/camp/night-camp-fire.jpg"},
-    { name: "Bents Camp", image: "http://bents-camp.com/2016/wp-content/uploads/2016/05/Bents-Camp-edited.jpg"},
-    { name: "Milky Way Camp", image: "https://media.wired.com/photos/599b4cfd4fa6fc733c11e30d/master/pass/iStock-820873602.jpg"},
-    { name: "Wilderness Camp", image: "http://www.wilderness-safaris.com/media/Camps/Botswana/Kwetsani%20Camp/10.CampGallery/kwetsani-galth.jpg"},
-    { name: "Big River", image: "http://www.diabetes.org/assets/img/community/camp/night-camp-fire.jpg"},
-    { name: "Bents Camp", image: "http://bents-camp.com/2016/wp-content/uploads/2016/05/Bents-Camp-edited.jpg"},
-    { name: "Milky Way Camp", image: "https://media.wired.com/photos/599b4cfd4fa6fc733c11e30d/master/pass/iStock-820873602.jpg"},
-    { name: "Wilderness Camp", image: "http://www.wilderness-safaris.com/media/Camps/Botswana/Kwetsani%20Camp/10.CampGallery/kwetsani-galth.jpg"},
-]
+var campgroundSchema = new mongoose.Schema({
+    name: String,
+    image: String,
+    description: String
+});
+
+var Campground = mongoose.model("campground", campgroundSchema);
 
 // Beginning of RESTful routing
 
@@ -31,7 +29,13 @@ app.get("/", (req, res) => {
 });
 
 app.get("/campgrounds", (req, res) => {
-    res.render("campgrounds", { campgrounds });
+    Campground.find({}, (err, campgrounds) => {
+        if (err) {
+            console.log("Error: ", err);
+        } else {
+            res.render("index", { campgrounds });
+        }
+    });
 });
 
 app.get("/campgrounds/new", (req, res) => {
@@ -41,11 +45,30 @@ app.get("/campgrounds/new", (req, res) => {
 app.post("/campgrounds", (req,res) => {
     var name = req.body.name;
     var image = req.body.image;
-    console.log(name);
-    console.log(image);
-    var newGrounds = {name, image};
-    campgrounds.push(newGrounds);
-    res.redirect("/campgrounds");
+    var description = req.body.description;
+
+    var newGrounds = {name, image, description};
+    Campground.create(newGrounds, (err, newGrounds) => {
+        if (err) {
+            console.log("Error: ", err);
+        } else {
+            // Redirect goes back to certain route, not a view name.
+            res.redirect("/campgrounds");
+        }
+    });
+});
+
+// SHOW
+app.get("/campgrounds/:id", (req, res) => {
+    var campId = req.params.id;
+    Campground.findById(campId, (err, fetchedGround) => {
+        if (err) {
+            console.log("Error: ", err);
+        } else {
+            // Setting the object 'campgrounds' to what we retrieved by 'findById()'
+            res.render("show", { campgrounds: fetchedGround });
+        }
+    });
 });
 
 
