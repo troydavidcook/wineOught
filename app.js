@@ -39,6 +39,7 @@ app.get('/campgrounds/new', (req, res) => {
 });
 
 app.post('/campgrounds', (req, res) => {
+  // OBJECT DESTRUCTURING. Airbnb preferred for some reason.
   const reqBody =
     {
       name: req.body.name,
@@ -46,10 +47,7 @@ app.post('/campgrounds', (req, res) => {
       description: req.body.description,
     };
 
-  const { name, image, description } = reqBody;
-
-  const newGrounds = reqBody;
-  Campground.create(newGrounds, (err) => {
+  Campground.create(reqBody, (err) => {
     if (err) {
       console.log('Error: ', err);
     } else {
