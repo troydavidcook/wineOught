@@ -1,9 +1,15 @@
-const express    = require("express");
-const path       = require("path")
+const Campground = require("./models/campground");
 const bodyParser = require("body-parser");
-const app        = express();
 const mongoose   = require("mongoose");
+const User = require("./models/user");
+const Comment = require("./models/comment");
+const express    = require("express");
 const mongoDb    = require("mongodb");
+const path       = require("path")
+const seedDb     = require("./seeds");
+const app        = express();
+
+seedDb();
 
 mongoose.Promise = global.Promise;
 mongoose.connect("mongodb://localhost/yelp_camp",{useMongoClient: true});
@@ -14,15 +20,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 app.set("view engine", "ejs");
 
-var campgroundSchema = new mongoose.Schema({
-    name: String,
-    image: String,
-    description: String
-});
-
-var Campground = mongoose.model("campground", campgroundSchema);
-
-// Beginning of RESTful routing
+//Beginning of RESTful routing
 
 app.get("/", (req, res) => {
     res.render("home");
@@ -76,5 +74,5 @@ app.get("/campgrounds/:id", (req, res) => {
 var port = process.env.PORT || 3000;
 
 app.listen(port, () => {
-    console.log(`Server running on port ${port}`);
+    console.log(`YelpCamp running on port ${port}`);
 });
