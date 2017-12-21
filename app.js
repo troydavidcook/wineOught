@@ -1,78 +1,81 @@
-const Campground = require("./models/campground");
-const bodyParser = require("body-parser");
-const mongoose   = require("mongoose");
-const User = require("./models/user");
-const Comment = require("./models/comment");
-const express    = require("express");
-const mongoDb    = require("mongodb");
-const path       = require("path")
-const seedDb     = require("./seeds");
-const app        = express();
+const Campground = require('./models/campground');
+const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+const User = require('./models/user');
+const Comment = require('./models/comment');
+const express = require('express');
+const path = require('path');
+const seedDb = require('./seeds');
 
-seedDb();
+const app = express();
 
 mongoose.Promise = global.Promise;
-mongoose.connect("mongodb://localhost/yelp_camp",{useMongoClient: true});
+mongoose.connect('mongodb://localhost/yelp_camp', { useMongoClient: true });
 
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(bodyParser.urlencoded({ extended: true }));
+app.set('view engine', 'ejs');
 
-app.use(bodyParser.urlencoded({extended: true}));
+// This function starts by wiping the db, then populating. Much like 'DROP DB' in pSQL.
+seedDb();
 
-app.set("view engine", "ejs");
-
-//Beginning of RESTful routing
-
-app.get("/", (req, res) => {
-    res.render("home");
+// Beginning of RESTful routing
+app.get('/', (req, res) => {
+  res.render('home');
 });
 
-app.get("/campgrounds", (req, res) => {
-    Campground.find({}, (err, campgrounds) => {
-        if (err) {
-            console.log("Error: ", err);
-        } else {
-            res.render("index", { campgrounds });
-        }
-    });
+app.get('/campgrounds', (req, res) => {
+  Campground.find({}, (err, campgrounds) => {
+    if (err) {
+      console.log('Error: ', err);
+    } else {
+      res.render('index', { campgrounds });
+    }
+  });
 });
 
-app.get("/campgrounds/new", (req, res) => {
-    res.render("new")
+app.get('/campgrounds/new', (req, res) => {
+  res.render('new')
 });
 
-app.post("/campgrounds", (req,res) => {
-    var name = req.body.name;
-    var image = req.body.image;
-    var description = req.body.description;
+app.post('/campgrounds', (req, res) => {
+  const reqBody =
+    {
+      name: req.body.name,
+      image: req.body.image,
+      description: req.body.description,
+    };
 
-    var newGrounds = {name, image, description};
-    Campground.create(newGrounds, (err, newGrounds) => {
-        if (err) {
-            console.log("Error: ", err);
-        } else {
-            // Redirect goes back to certain route, not a view name.
-            res.redirect("/campgrounds");
-        }
-    });
+  const { name, image, description } = reqBody;
+
+  const newGrounds = reqBody;
+  Campground.create(newGrounds, (err) => {
+    if (err) {
+      console.log('Error: ', err);
+    } else {
+      // Redirect goes back to certain route, not a view name.
+      res.redirect('/campgrounds');
+    }
+  });
 });
 
 // SHOW
-app.get("/campgrounds/:id", (req, res) => {
-    var campId = req.params.id;
-    Campground.findById(campId, (err, fetchedGround) => {
-        if (err) {
-            console.log("Error: ", err);
-        } else {
-            // Setting the object 'campgrounds' to what we retrieved by 'findById()'
-            res.render("show", { campgrounds: fetchedGround });
-        }
-    });
+app.get('/campgrounds/:id', (req, res) => {
+  const campId = req.params.id;
+  // Associating different objects by populating different model into the campground,
+  // then executing the callback. Important association line here. IMPORTANT.
+  Campground.findById(campId).populate('comments').exec((err, fetchedGround) => {
+    if (err) {
+      console.log('Error: ', err);
+    } else {
+      // Setting the object 'campgrounds' to what we retrieved by 'findById()'
+      res.render('show', { campgrounds: fetchedGround });
+    }
+  });
 });
 
-
-
-var port = process.env.PORT || 3000;
+const port = process.env.PORT || 3000;
 
 app.listen(port, () => {
-    console.log(`YelpCamp running on port ${port}`);
+  console.log(`YelpCamp running on port ${port}`);
 });
