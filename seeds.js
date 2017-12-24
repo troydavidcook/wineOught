@@ -13,7 +13,7 @@ const seedData = [
   {
     name: 'Mos Eisley',
     image: 'https://www.dailydot.com/wp-content/uploads/016/1e/MosEisleystreet_UE4.jpg',
-    description: 'Great little, mostly desolate town. Great bar scene, but the music\'s a little repetative.',
+    description: 'From a distance, the spaceport looks like a haphazard collage of low-grade concrete, stone and plastoid structures that spread outward from a central power-and-water distribution plant like the spokes of a wheel. Also, at a distance, the smooth circular depressions of launch stations look like craters pockmarking the landscape. The town is really larger than it appears, as a good portion of it lies underground. In fact, the town has a population of around 40,000 to 60,000, varying seasonally. It was built from the beginning with commerce in mind. Even the oldest of the town\'s buildings was designed to provide protection from Tatooine\'s twin suns. The buildings appear primitive from the outside and most of them actually are. The Mos Eisley Cantina was one of the spaceport\'s original blockhouses. The first view of Mos Eisley in Star Wars is actually a shot of Death Valley in California from the Dante\'s View lookout, with a matte painting added in the distance. The actual filming on location took place on the Tunisian island of Djerba.',
   },
   {
     name: 'Isham Park',
@@ -29,7 +29,7 @@ const seedDb = () => {
     if (err) {
       console.log('Error: ', err);
     }
-    console.log('Campgrounds removed.');
+    console.log('Campground removed.');
     seedData.forEach((seed) => {
       Campground.create(seed, (error, campground) => {
         if (error) {

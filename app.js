@@ -61,7 +61,7 @@ app.get('/campgrounds/:id', (req, res) => {
     if (err) {
       console.log('Error: ', err);
     } else {
-      // Setting the object 'campgrounds' to what we retrieved by 'findById()'
+      // Setting the object 'campgrounds' to what we retrieved by 'findById()';
       res.render('campgrounds/show', { campgrounds: fetchedGround });
     }
   });
@@ -89,8 +89,7 @@ app.post('/campgrounds/:id/comments', (req, res) => {
     if (err) {
       console.log('Error: ', err);
       res.redirect('/campgrounds');
-    }
-    else {
+    } else {
       // Posting and assocciation.
       Comment.create(req.body.comment, (error, comment) => {
         if (err) {

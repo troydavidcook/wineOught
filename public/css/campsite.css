@@ -6,6 +6,14 @@ img {
     max-width: 400px;
 }
 
+.thumbnail {
+    padding: 0;
+}
+
+.caption-full {
+    padding: 10px 15px;
+}
+
 .create-new {
     text-align: center;
     margin: 15px auto 30px auto;
