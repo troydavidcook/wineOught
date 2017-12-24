@@ -6,7 +6,7 @@ const Comment    = require('./models/comment');
 
 const seedData = [
   {
-    name: 'Orc Park',
+    name: 'Hobbiton',
     image: 'http://www.thelandofshadow.com/wp-content/uploads/2013/04/mordor_by_edli-d2yrha5.jpg',
     description: 'A great place to see some old school races trouncing about near some pretty dark mountains. Besides the lava and Uruakai, twas a really cool place to visit.',
   },
@@ -29,19 +29,19 @@ const seedDb = () => {
     if (err) {
       console.log('Error: ', err);
     }
-    console.log('Campground removed.');
+    console.log('Campgrounds removed.');
     seedData.forEach((seed) => {
-      Campground.create(seed, (err, campground) => {
-        if (err) {
-          console.log('Error: ', err);
+      Campground.create(seed, (error, campground) => {
+        if (error) {
+          console.log('Error: ', error);
         } else {
           console.log('Campground added.');
           Comment.create(
             {
               text: 'This place was scary...',
               author: 'Troy',
-            }, (err, comment) => {
-              if (err) {
+            }, (error1, comment) => {
+              if (error1) {
                 console.log('Error: ', err)
               } else {
                 campground.comments.push(comment);

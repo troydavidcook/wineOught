@@ -21,7 +21,7 @@ seedDb();
 
 // Beginning of RESTful routing
 app.get('/', (req, res) => {
-  res.render('home');
+  res.redirect('/campgrounds');
 });
 
 app.get('/campgrounds', (req, res) => {
@@ -29,23 +29,18 @@ app.get('/campgrounds', (req, res) => {
     if (err) {
       console.log('Error: ', err);
     } else {
-      res.render('index', { campgrounds });
+      res.render('campgrounds/index', { campgrounds });
     }
   });
 });
 
 app.get('/campgrounds/new', (req, res) => {
-  res.render('new')
+  res.render('campgrounds/new');
 });
 
 app.post('/campgrounds', (req, res) => {
   // OBJECT DESTRUCTURING. Airbnb preferred for some reason.
-  const reqBody =
-    {
-      name: req.body.name,
-      image: req.body.image,
-      description: req.body.description,
-    };
+  const reqBody = { name: req.body.name, image: req.body.image, description: req.body.description };
 
   Campground.create(reqBody, (err) => {
     if (err) {
@@ -67,7 +62,45 @@ app.get('/campgrounds/:id', (req, res) => {
       console.log('Error: ', err);
     } else {
       // Setting the object 'campgrounds' to what we retrieved by 'findById()'
-      res.render('show', { campgrounds: fetchedGround });
+      res.render('campgrounds/show', { campgrounds: fetchedGround });
+    }
+  });
+});
+
+// ==========================
+//      Comments Routes
+// ==========================
+
+app.get('/campgrounds/:id/comments/new', (req, res) => {
+  const campgroundId = req.params.id;
+  Campground.findById(campgroundId, (err, campground) => {
+    if (err) {
+      console.log('Error: ', err);
+    } else {
+      res.render('comments/new', { campground });
+    }
+  });
+});
+
+// Important association
+app.post('/campgrounds/:id/comments', (req, res) => {
+  const campgroundId = req.params.id;
+  Campground.findById(campgroundId, (err, campground) => {
+    if (err) {
+      console.log('Error: ', err);
+      res.redirect('/campgrounds');
+    }
+    else {
+      // Posting and assocciation.
+      Comment.create(req.body.comment, (error, comment) => {
+        if (err) {
+          console.log('Error: ', error);
+        } else {
+          campground.comments.push(comment);
+          campground.save();
+          res.redirect(`/campgrounds/${campgroundId}`);
+        }
+      });
     }
   });
 });
