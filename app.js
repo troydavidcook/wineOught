@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const User = require('./models/user');
 const Comment = require('./models/comment');
 const express = require('express');
+const mongoDb = require('mongodb');
 const path = require('path');
 const seedDb = require('./seeds');
 
