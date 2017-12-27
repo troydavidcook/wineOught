@@ -1,20 +1,38 @@
-const Campground = require('./models/campground');
-const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
-const User = require('./models/user');
-const Comment = require('./models/comment');
-const express = require('express');
-const mongoDb = require('mongodb');
-const path = require('path');
-const seedDb = require('./seeds');
+const passportLocalMongoose = require('passport-local-mongoose');
+const Campground            = require('./models/campground');
+const Comment               = require('./models/comment');
+const session               = require('express-session');
+const localStrategy         = require('passport-local');
+const User                  = require('./models/user');
+const bodyParser            = require('body-parser');
+const mongoose              = require('mongoose');
+const passport              = require('passport');
+const express               = require('express');
+const mongoDb               = require('mongodb');
+const seedDb                = require('./seeds');
+const path                  = require('path');
 
 const app = express();
 
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost/yelp_camp', { useMongoClient: true });
 
+app.use({
+  secret: 'Secret Yelpcamp key, again, hoping we\'re changing it soon, environment variable perhaps?',
+  resave: false,
+  saveUninitialized: false,
+});
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.use(new localStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({ extended: true }));
+
 app.set('view engine', 'ejs');
 
 // This function starts by wiping the db, then populating. Much like 'DROP DB' in pSQL.
