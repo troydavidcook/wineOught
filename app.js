@@ -17,11 +17,11 @@ const app = express();
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost/yelp_camp', { useMongoClient: true });
 
-app.use({
+app.use(session({
   secret: 'Secret Yelpcamp key, again, hoping we\'re changing it soon, environment variable perhaps?',
   resave: false,
   saveUninitialized: false,
-});
+}));
 
 app.use(passport.initialize());
 app.use(passport.session());
