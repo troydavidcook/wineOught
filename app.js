@@ -37,6 +37,11 @@ passport.deserializeUser(User.deserializeUser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({ extended: true }));
 
+app.use((req, res, next) => {
+  res.locals.currentUser = req.user;
+  next()
+});
+
 app.set('view engine', 'ejs');
 
 // This function starts by wiping the db, then populating. Much like 'DROP DB' in pSQL.
@@ -61,9 +66,9 @@ app.get('/campgrounds/new', isLoggedIn, (req, res) => {
   res.render('campgrounds/new');
 });
 
-app.post('/campgrounds', (req, res) => {
+app.post('/campgrounds', isLoggedIn, (req, res) => {
   // OBJECT DESTRUCTURING. Airbnb preferred for some reason.
-  const reqBody = { name: req.body.name, image: req.body.image, description: req.body.description };
+  const reqBody = { name: req.body.name, image: req.body.profileImage, description: req.body.description };
 
   Campground.create(reqBody, (err) => {
     if (err) {
