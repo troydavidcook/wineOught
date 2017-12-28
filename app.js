@@ -57,7 +57,7 @@ app.get('/campgrounds', (req, res) => {
   });
 });
 
-app.get('/campgrounds/new', (req, res) => {
+app.get('/campgrounds/new', isLoggedIn, (req, res) => {
   res.render('campgrounds/new');
 });
 
@@ -94,7 +94,7 @@ app.get('/campgrounds/:id', (req, res) => {
 //      Comments Routes
 // ==========================
 
-app.get('/campgrounds/:id/comments/new', (req, res) => {
+app.get('/campgrounds/:id/comments/new', isLoggedIn, (req, res) => {
   const campgroundId = req.params.id;
   Campground.findById(campgroundId, (err, campground) => {
     if (err) {
@@ -106,7 +106,7 @@ app.get('/campgrounds/:id/comments/new', (req, res) => {
 });
 
 // Important association
-app.post('/campgrounds/:id/comments', (req, res) => {
+app.post('/campgrounds/:id/comments', isLoggedIn, (req, res) => {
   const campgroundId = req.params.id;
   Campground.findById(campgroundId, (err, campground) => {
     if (err) {
@@ -196,6 +196,9 @@ app.get('/logout', (req, res) => {
   res.redirect('/campgrounds');
 });
 
+
+// This function is hoisted, and can be used as middleware for any routes you want to use, in this
+// case, to make sure User 'isLoggedIn'.
 
 function isLoggedIn(req, res, next) {
   if (req.isAuthenticated()) {

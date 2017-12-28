@@ -4,9 +4,10 @@ ___
   * Passport
   * Passport Local
   * Passport Local Mongoose
+___
+##### Creating a user with a Sign In form with Passport.js
 
-#### Creating a user with a Sign In form.
-```
+```js
 // var newUser = new User({
 //   username : username,
 //   email : email,
@@ -36,4 +37,39 @@ app.post('/signup', (req, res) => {
     });
   });
 });
+```
+___
+##### Handling logging in and logging out with Passport.js
+
+```js
+app.get('/login', (req, res) => {
+  res.render('login');
+});
+
+app.post('/login', passport.authenticate(
+  'local',
+  {
+    successRedirect: '/campgrounds',
+    failureRedirect: '/login',
+  },
+), (req, res) => {
+});
+
+app.get('/logout', (req, res) => {
+  req.logout();
+  res.redirect('/');
+});
+
+app.get('/logout', (req, res) => {
+  req.logout();
+  res.redirect('/campgrounds');
+});
+
+
+function isLoggedIn(req, res, next) {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  res.redirect('/login');
+}
 ```
