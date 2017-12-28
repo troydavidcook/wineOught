@@ -12,8 +12,9 @@ const mongoDb               = require('mongodb');
 const seedDb                = require('./seeds');
 const path                  = require('path');
 
+// Requiring all route files
 const campgroundRoutes      = require('./routes/campgrounds');
-const commentsRoutes        = require('./routes/comments');
+const commentRoutes         = require('./routes/comments');
 const indexRoutes           = require('./routes/index');
 
 const app = express();
@@ -37,6 +38,7 @@ app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
+// ========================
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -51,9 +53,9 @@ app.set('view engine', 'ejs');
 // This function starts by wiping the db, then populating. Much like 'DROP DB' in pSQL.
 seedDb();
 
-app.use(campgroundRoutes);
-app.use(commentsRoutes);
 app.use(indexRoutes);
+app.use('/campgrounds', campgroundRoutes);
+app.use('/campgrounds/:id/comments', commentRoutes);
 
 const port = process.env.PORT || 3000;
 

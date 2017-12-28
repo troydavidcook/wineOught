@@ -1,8 +1,8 @@
 const express    = require('express');
-const router     = express.Router();
+const router     = express.Router({ mergeparams: true });
 const Campground = require('../models/campground');
 
-router.get('/campgrounds', (req, res) => {
+router.get('/', (req, res) => {
   Campground.find({}, (err, campgrounds) => {
     if (err) {
       console.log('Error: ', err);
@@ -19,11 +19,13 @@ function isLoggedIn(req, res, next) {
   return res.redirect('/login');
 }
 
-router.get('/campgrounds/new', isLoggedIn, (req, res) => {
+// New form route
+router.get('/new', isLoggedIn, (req, res) => {
   res.render('campgrounds/new');
 });
 
-router.post('/campgrounds', isLoggedIn, (req, res) => {
+// Create new campground route
+router.post('/', isLoggedIn, (req, res) => {
   // OBJECT DESTRUCTURING. Airbnb preferred for some reason.
   const reqBody =
     {
@@ -42,8 +44,8 @@ router.post('/campgrounds', isLoggedIn, (req, res) => {
   });
 });
 
-// SHOW
-router.get('/campgrounds/:id', (req, res) => {
+// SHOW specific campground route
+router.get('/:id', (req, res) => {
   const campId = req.params.id;
   // Associating different objects by populating different model into the campground,
   // then executing the callback. Important association line here. IMPORTANT.
