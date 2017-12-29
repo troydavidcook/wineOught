@@ -1,6 +1,7 @@
-const express    = require('express');
-const router     = express.Router({ mergeparams: true });
-const Campground = require('../models/campground');
+const express          = require('express');
+const mongoose         = require('mongoose');
+const router           = express.Router({ mergeparams: true });
+const Campground       = require('../models/campground');
 
 router.get('/', (req, res) => {
   Campground.find({}, (err, campgrounds) => {
@@ -60,6 +61,32 @@ router.get('/:id', (req, res) => {
     } else {
       // Setting the object 'campgrounds' to what we retrieved by 'findById()';
       res.render('campgrounds/show', { campgrounds: fetchedGround });
+    }
+  });
+});
+
+// Get UPDATE form
+
+router.get('/:id/edit', (req, res) => {
+  const campId = req.params.id;
+  Campground.findById(campId, (err, fetchedGround) => {
+    if (err) {
+      console.log('Error: ', err);
+    } else {
+      res.render('campgrounds/edit', { campground: fetchedGround });
+    }
+  });
+});
+
+// Update route
+router.put('/:id', (req, res) => {
+  const campId = req.params.id;
+  Campground.findByIdAndUpdate(campId, req.body.campground, (err, updatedCampground) => { 
+    console.log(req.body.campground);
+    if (err) {
+      console.log('Error: ', err);
+    } else {
+      res.redirect(`/campgrounds/${campId}`);
     }
   });
 });
