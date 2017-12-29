@@ -51,7 +51,7 @@ app.use((req, res, next) => {
 app.set('view engine', 'ejs');
 
 // This function starts by wiping the db, then populating. Much like 'DROP DB' in pSQL.
-seedDb();
+// seedDb();
 
 app.use(indexRoutes);
 app.use('/campgrounds', campgroundRoutes);

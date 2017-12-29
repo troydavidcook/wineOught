@@ -29,9 +29,14 @@ router.post('/', isLoggedIn, (req, res) => {
   // OBJECT DESTRUCTURING. Airbnb preferred for some reason.
   const reqBody =
     {
+      id: req.body._id,
       name: req.body.name,
       image: req.body.image,
       description: req.body.description,
+      author: {
+        id: req.user._id,
+        username: req.user.username,
+      },
     };
 
   Campground.create(reqBody, (err) => {
