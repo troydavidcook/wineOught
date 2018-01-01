@@ -36,7 +36,6 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(expressSanitizer());
 
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());

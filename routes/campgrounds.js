@@ -1,7 +1,33 @@
-const express          = require('express');
-const mongoose         = require('mongoose');
-const router           = express.Router({ mergeparams: true });
-const Campground       = require('../models/campground');
+const express = require('express');
+const Campground = require('../models/campground');
+
+const router = express.Router();
+
+
+function isLoggedIn(req, res, next) {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  return res.redirect('/login');
+}
+
+function checkCampgroundOwnership(req, res, next) {
+  const campId = req.params.id;
+  if (req.isAuthenticated()) {
+    Campground.findById(campId, (err, fetchedGround) => {
+      if (err) {
+        res.redirect('back');
+      } else if (fetchedGround.author.id.equals(req.user._id)) {
+        next();
+      } else {
+        res.redirect('back');
+      }
+    });
+  } else {
+    res.redirect('back');
+  }
+}
+
 
 router.get('/', (req, res) => {
   Campground.find({}, (err, campgrounds) => {
@@ -13,12 +39,6 @@ router.get('/', (req, res) => {
   });
 });
 
-function isLoggedIn(req, res, next) {
-  if (req.isAuthenticated()) {
-    return next();
-  }
-  return res.redirect('/login');
-}
 
 // New form route
 router.get('/new', isLoggedIn, (req, res) => {
@@ -66,23 +86,17 @@ router.get('/:id', (req, res) => {
 });
 
 // Get UPDATE form
-
-router.get('/:id/edit', (req, res) => {
+router.get('/:id/edit', checkCampgroundOwnership, (req, res) => {
   const campId = req.params.id;
   Campground.findById(campId, (err, fetchedGround) => {
-    if (err) {
-      console.log('Error: ', err);
-    } else {
-      res.render('campgrounds/edit', { campground: fetchedGround });
-    }
+    res.render('campgrounds/edit', { campground: fetchedGround });
   });
 });
 
 // Update route
-router.put('/:id', (req, res) => {
+router.put('/:id', checkCampgroundOwnership, (req, res) => {
   const campId = req.params.id;
-  Campground.findByIdAndUpdate(campId, req.body.campground, (err, updatedCampground) => { 
-    console.log(req.body.campground);
+  Campground.findByIdAndUpdate(campId, req.body.campground, (err, updatedCampground) => {
     if (err) {
       console.log('Error: ', err);
     } else {
@@ -90,5 +104,17 @@ router.put('/:id', (req, res) => {
     }
   });
 });
+
+// // Destroy route
+// router.delete('/:id', (req, res) => {
+//   const campId = req.params.id;
+//   Campground.findByIdAndRemove(campId, (err) => {
+//     if (err) {
+//       res.redirect(`/${campId}`);
+//     } else {
+//       res.redirect('/');
+//     }
+//   });
+// });
 
 module.exports = router;
