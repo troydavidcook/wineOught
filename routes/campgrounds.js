@@ -105,16 +105,16 @@ router.put('/:id', checkCampgroundOwnership, (req, res) => {
   });
 });
 
-// // Destroy route
-// router.delete('/:id', (req, res) => {
-//   const campId = req.params.id;
-//   Campground.findByIdAndRemove(campId, (err) => {
-//     if (err) {
-//       res.redirect(`/${campId}`);
-//     } else {
-//       res.redirect('/');
-//     }
-//   });
-// });
+// Destroy route
+router.delete('/:id', checkCampgroundOwnership, (req, res) => {
+  const campId = req.params.id;
+  Campground.findByIdAndRemove(campId, (err) => {
+    if (err) {
+      res.redirect(`/${campId}`);
+    } else {
+      res.redirect('/');
+    }
+  });
+});
 
 module.exports = router;
