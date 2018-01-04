@@ -64,5 +64,5 @@ app.use('/campgrounds/:id/comments', commentRoutes);
 const port = process.env.PORT || 3000;
 
 app.listen(port, () => {
-  console.log(`YelpCamp running on port ${port}`);
+  console.log(`YelpCamp is running on port ${port}`);
 });
