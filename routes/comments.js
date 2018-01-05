@@ -1,7 +1,7 @@
 const express    = require('express');
-const router     = express.Router({ mergeParams: true });
-const Campground = require('../models/campground');
 const Comment    = require('../models/comment');
+const Campground = require('../models/campground');
+const router     = express.Router({ mergeParams: true });
 
 
 function isLoggedIn(req, res, next) {
@@ -9,6 +9,24 @@ function isLoggedIn(req, res, next) {
     return next();
   }
   return res.redirect('/login');
+}
+
+function checkCommentOwnership(req, res, next) {
+  const campId = req.params.id;
+  const commentId = req.params.comment_id;
+  if (req.isAuthenticated()) {
+    Comment.findById(commentId, (err, fetchedComment) => {
+      if (err) {
+        res.redirect('back');
+      } else if (fetchedComment.author.id.equals(req.user._id)) {
+        next();
+      } else {
+        res.redirect('back');
+      }
+    });
+  } else {
+    res.redirect('back');
+  }
 }
 
 // New comment route
@@ -50,7 +68,7 @@ router.post('/', isLoggedIn, (req, res) => {
   });
 });
 
-router.get('/:comment_id/edit', (req, res) => {
+router.get('/:comment_id/edit', checkCommentOwnership, (req, res) => {
   const commentId = req.params.comment_id;
   Comment.findById(commentId, (err, fetchedComment) => {
     if (err) {
@@ -64,7 +82,7 @@ router.get('/:comment_id/edit', (req, res) => {
 });
 
 // Comment UPDATE route
-router.put('/:comment_id', (req, res) => {
+router.put('/:comment_id', checkCommentOwnership, (req, res) => {
   const commentId = req.params.comment_id;
   const campId = req.params.id;
   Comment.findByIdAndUpdate(commentId, req.body.comment, (err, updatedComment) => {
@@ -77,7 +95,7 @@ router.put('/:comment_id', (req, res) => {
 });
 
 // Comment destroy
-router.delete('/:comment_id', (req, res) => {
+router.delete('/:comment_id', checkCommentOwnership, (req, res) => {
   const commentId = req.params.comment_id;
   const campId = req.params.id;
   Comment.findByIdAndRemove(commentId, (err) => {
