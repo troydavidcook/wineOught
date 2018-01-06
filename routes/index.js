@@ -1,6 +1,7 @@
 const express = require('express');
-const User = require('../models/user');
 const passport = require('passport');
+const User = require('../models/user');
+const middleware = require('../middleware');
 
 const router = express.Router();
 
@@ -29,16 +30,8 @@ const router = express.Router();
 // });
 // }
 
-function isLoggedIn(req, res, next) {
-  if (req.isAuthenticated()) {
-    return next();
-  }
-  return res.redirect('/login');
-}
-
-
 router.get('/', (req, res) => {
-  res.redirect('/campgrounds');
+  res.render('landing');
 });
 
 router.get('/signup', (req, res) => {
@@ -47,13 +40,16 @@ router.get('/signup', (req, res) => {
 
 router.post('/signup', (req, res) => {
   const newUser = new User({ username: req.body.username });
+  // Passport sends along the 'err' object that we can access, in this case,
+  // the .message for the req.flash();
   User.register(newUser, req.body.password, (err, user) => {
     if (err) {
-      console.log('Error: ', err);
-      res.render('signup');
+      req.flash('error', err.message);
+      return res.redirect('/signup');
     }
     passport.authenticate('local')(req, res, () => {
-      res.redirect('/');
+      req.flash('success', `Welcome to yelpCamp, ${user.username}`);
+      return res.redirect('/campgrounds');
     });
   });
 });
@@ -77,16 +73,8 @@ router.post('/login', passport.authenticate(
 
 router.get('/logout', (req, res) => {
   req.logout();
-  res.redirect('/');
-});
-
-router.get('/logout', (req, res) => {
-  req.logout();
+  req.flash('success', 'Successfully logged out!');
   res.redirect('/campgrounds');
 });
-
-
-// This function is hoisted, and can be used as middleware for any routes you want to use, in this
-// case, to make sure User 'isLoggedIn'.
 
 module.exports = router;
