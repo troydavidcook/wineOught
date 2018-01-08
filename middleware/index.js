@@ -1,4 +1,4 @@
-const Campground = require('../models/campground');
+const Wine = require('../models/wine');
 const Comment = require('../models/comment');
 
 const middlewareObj = {};
@@ -11,14 +11,14 @@ middlewareObj.isLoggedIn = function isLoggedIn(req, res, next) {
   return res.redirect('/login');
 };
 
-middlewareObj.checkCampgroundOwnership = function checkCampgroundOwnership(req, res, next) {
-  const campId = req.params.id;
+middlewareObj.checkWineOwnership = function checkWineOwnership(req, res, next) {
+  const wineId = req.params.id;
   if (req.isAuthenticated()) {
-    Campground.findById(campId, (err, fetchedGround) => {
+    Wine.findById(wineId, (err, fetchedWine) => {
       if (err) {
         req.flash('error', 'Campground not found');
         res.redirect('back');
-      } else if (fetchedGround.author.id.equals(req.user._id)) {
+      } else if (fetchedWine.author.id.equals(req.user._id)) {
         next();
       } else {
         req.flash('error', 'Sorry, permission denied.');
@@ -32,7 +32,7 @@ middlewareObj.checkCampgroundOwnership = function checkCampgroundOwnership(req, 
 };
 
 middlewareObj.checkCommentOwnership = function checkCommentOwnership(req, res, next) {
-  const campId = req.params.id;
+  const wineId = req.params.id;
   const commentId = req.params.comment_id;
   if (req.isAuthenticated()) {
     Comment.findById(commentId, (err, fetchedComment) => {

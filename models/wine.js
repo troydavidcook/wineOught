@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 // This schema shows the 'ref'erence to different model, like a key would in pSQL.
-const campgroundSchema = new mongoose.Schema({
+const wineSchema = new mongoose.Schema({
   name: String,
   price: String,
   image: String,
@@ -21,4 +21,4 @@ const campgroundSchema = new mongoose.Schema({
   ],
 });
 
-module.exports = mongoose.model('Campground', campgroundSchema);
+module.exports = mongoose.model('Wine', wineSchema);

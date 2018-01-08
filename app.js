@@ -1,11 +1,11 @@
 const passportLocalMongoose = require('passport-local-mongoose');
-const Campground            = require('./models/campground');
 const expressSanitizer      = require('express-sanitizer');
 const Comment               = require('./models/comment');
 const methodOverride        = require('method-override');
 const session               = require('express-session');
 const LocalStrategy         = require('passport-local');
 const User                  = require('./models/user');
+const Wine                  = require('./models/wine');
 const flash                  = require('connect-flash');
 const bodyParser            = require('body-parser');
 const mongoose              = require('mongoose');
@@ -16,9 +16,9 @@ const seedDb                = require('./seeds');
 const path                  = require('path');
 
 // Requiring all route files
-const campgroundRoutes      = require('./routes/campgrounds');
 const commentRoutes         = require('./routes/comments');
 const indexRoutes           = require('./routes/index');
+const wineRoutes            = require('./routes/wines');
 
 const app = express();
 
@@ -65,11 +65,11 @@ app.set('view engine', 'ejs');
 // seedDb();
 
 app.use(indexRoutes);
-app.use('/campgrounds', campgroundRoutes);
-app.use('/campgrounds/:id/comments', commentRoutes);
+app.use('/wines', wineRoutes);
+app.use('/wines/:id/comments', commentRoutes);
 
 const port = process.env.PORT || 3000;
 
 app.listen(port, () => {
-  console.log(`YelpCamp is running on port ${port}`);
+  console.log(`Wine Ought is running on port ${port}`);
 });

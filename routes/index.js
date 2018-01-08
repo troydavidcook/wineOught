@@ -48,8 +48,8 @@ router.post('/signup', (req, res) => {
       return res.redirect('/signup');
     }
     passport.authenticate('local')(req, res, () => {
-      req.flash('success', `Welcome to yelpCamp, ${user.username}`);
-      return res.redirect('/campgrounds');
+      req.flash('success', `Welcome to Wine Ought, ${user.username}!`);
+      return res.redirect('/wines');
     });
   });
 });
@@ -65,7 +65,7 @@ router.get('/login', (req, res) => {
 router.post('/login', passport.authenticate(
   'local',
   {
-    successRedirect: '/campgrounds',
+    successRedirect: '/wines',
     failureRedirect: '/login',
   },
 ), (req, res) => {
@@ -74,7 +74,7 @@ router.post('/login', passport.authenticate(
 router.get('/logout', (req, res) => {
   req.logout();
   req.flash('success', 'Successfully logged out!');
-  res.redirect('/campgrounds');
+  res.redirect('/wines');
 });
 
 module.exports = router;

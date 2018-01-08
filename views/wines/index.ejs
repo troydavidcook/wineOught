@@ -2,22 +2,22 @@
     <div class="container">
         <header class="jumbotron">
             <div class="container">
-                <h5>Browse our list of campgrounds!</h5>
-                <p>A brief selection of campgrounds from around the world</p>
+                <h5>Browse our list of wines!</h5>
+                <p>A brief selection of wines from around the world</p>
                 <p>
-                    <a href="/campgrounds/new" class="btn-sm btn-primary">Add a new Camp Ground</a>
+                    <a href="/wines/new" class="btn-sm btn-secondary landing-button">Add a new Wine!</a>
                 </p>
             </div>
         </header>
                 <!-- 'Campsite is what's passed in, in the forEach, hence the ejs templating. -->
         <div class="row">
-            <% campgrounds.forEach((campsite) => { %>
+            <% wines.forEach((wine) => { %>
                 <div class="col-lg-3 col-md-4 col-sm-6">
                     <div class="thumbnail">
-                        <img src= "<%= campsite.image%>" alt="">
+                        <img src= "<%= wine.image%>" alt="">
                         <div class="caption">
-                            <h4> <%= campsite.name %> </h4>
-                            <a href="/campgrounds/<%= campsite._id %>" class="btn btn-primary btn-xs">More Info</a>
+                            <h4> <%= wine.name %> </h4>
+                            <a href="/wines/<%= wine._id %>" class="btn btn-primary btn-xs">More Info</a>
                         </div>   
                     </div>
                 </div>      

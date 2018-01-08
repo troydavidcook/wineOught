@@ -1,7 +1,7 @@
 // mongodb_notes seeds
 
 const mongoose   = require('mongoose');
-const Campground = require('./models/campground');
+const Wine       = require('./models/wine');
 const Comment    = require('./models/comment');
 
 const seedData = [
@@ -25,17 +25,17 @@ const seedData = [
 // This will all be run in the server file every time refreshed.
 const seedDb = () => {
   // Removes all data.
-  Campground.remove({}, (err) => {
+  Wine.remove({}, (err) => {
     if (err) {
       console.log('Error: ', err);
     }
-    console.log('Campground removed.');
+    console.log('Wine removed.');
     seedData.forEach((seed) => {
-      Campground.create(seed, (error, campground) => {
+      Wine.create(seed, (error, wine) => {
         if (error) {
           console.log('Error: ', error);
         } else {
-          console.log('Campground added.');
+          console.log('Wine added.');
           Comment.create(
             {
               text: 'This place was scary...',
@@ -44,8 +44,8 @@ const seedDb = () => {
               if (error1) {
                 console.log('Error: ', err)
               } else {
-                campground.comments.push(comment);
-                campground.save();
+                wine.comments.push(comment);
+                wine.save();
                 console.log('Created new comment');
               }
             });
