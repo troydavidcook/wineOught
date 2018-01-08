@@ -35,19 +35,19 @@ body {
   }
   .slideshow li:nth-child(2) { 
     background-image: url('https://i.imgur.com/jTimRYx.jpg');
-    animation-delay: 10s; 
+    animation-delay: 6s; 
   }
   .slideshow li:nth-child(3) { 
     background-image: url('https://i.imgur.com/zJ5HQTo.jpg');
-    animation-delay: 20s; 
+    animation-delay: 12s; 
   }
   .slideshow li:nth-child(4) { 
     background-image: url('https://i.imgur.com/uEFzXoL.jpg');
-    animation-delay: 30s; 
+    animation-delay: 24s; 
   }
   .slideshow li:nth-child(5) { 
     background-image: url('https://i.imgur.com/wHIkoS9.jpg');
-    animation-delay: 40s; 
+    animation-delay: 36s; 
   }
 
   @keyframes imageAnimation { 

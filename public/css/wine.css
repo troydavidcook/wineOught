@@ -6,6 +6,11 @@ img {
     width: 100%;
 }
 
+a {
+    color: black;
+    text-decoration: none;
+}
+
 .thumbnail {
     padding:0;
     /* min-height: 300px; */
@@ -40,6 +45,7 @@ img {
 }
 
 .red-button {
-    background: rgba(249, 118, 118, 0.5);
+    background: rgba(249, 118, 118, 0.6);
     color: white;
+    line-height: .65;
   }

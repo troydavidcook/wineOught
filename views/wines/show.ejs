@@ -14,7 +14,7 @@
             <div class="thumbnail">
                 <img class="img-responsive"  src="<%= wines.image %>">
             <div class="caption-full">
-                <h4 class="pull-right">$<%= wines.region %></h4>
+                <h4 class="pull-right"><%= wines.region %></h4>
                 <h4><a href='#'><%= wines.name %></a></h4>
                 <p><em>Added by <%= wines.author.username %></em></p>
                 <hr>
@@ -51,6 +51,7 @@
                         <button class="btn btn-xs btn-danger">Delete Comment</button>
                         </form>
                         <% } %>
+                        <hr>
                     <% }) %>
                     </div>
                 </div>

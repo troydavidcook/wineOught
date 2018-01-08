@@ -23,7 +23,7 @@ const wineRoutes            = require('./routes/wines');
 const app = express();
 
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost/yelp_camp', { useMongoClient: true });
+mongoose.connect('mongodb://localhost/wine_ought', { useMongoClient: true });
 
 // ===============
 // Passport Config
