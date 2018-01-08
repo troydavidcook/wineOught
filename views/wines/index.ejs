@@ -4,9 +4,9 @@
             <div class="container">
                 <h5>Browse our list of wines!</h5>
                 <p>A brief selection of wines from around the world</p>
-                <p>
-                    <a href="/wines/new" class="btn-sm btn-secondary landing-button">Add a new Wine!</a>
-                </p>
+           
+                <a href="/wines/new" class="btn-sm btn-secondary red-button">Add a new Wine!</a>
+           
             </div>
         </header>
                 <!-- 'Campsite is what's passed in, in the forEach, hence the ejs templating. -->
@@ -17,7 +17,7 @@
                         <img src= "<%= wine.image%>" alt="">
                         <div class="caption">
                             <h4> <%= wine.name %> </h4>
-                            <a href="/wines/<%= wine._id %>" class="btn btn-primary btn-xs">More Info</a>
+                            <a href="/wines/<%= wine._id %>" class="btn btn-secondary btn-sm">More Info</a>
                         </div>   
                     </div>
                 </div>      

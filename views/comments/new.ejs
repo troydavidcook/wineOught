@@ -1,10 +1,10 @@
 <% include ../partials/header %>
 
   <div class="form-container">
-        <h4 style="text-align: center; margin-bottom: 20px">Add New Comment to <%= campground.name %></h4>
+        <h4 style="text-align: center; margin-bottom: 20px">Add New Comment to <%= wine.name %></h4>
       <div class="row">
         <div class="new-form">
-            <form action="/campgrounds/<%= campground._id %>/comments" method="POST">
+            <form action="/wines/<%= wine._id %>/comments" method="POST">
                 <div class="form-group">
                     <textarea class="form-control" type="text" name="comment[text]" placeholder="Add comment"></textarea>
                 </div>
@@ -12,7 +12,7 @@
                     <button class="btn btn-xs btn-default btn-primary btn-block">Add Comment</button>
                 </div>     
             </form>
-            <a href="/campgrounds">Head Back to Camp</a> 
+            <a href="/wines">Head Back to Camp</a> 
         </div>
       </div>
   </div>  

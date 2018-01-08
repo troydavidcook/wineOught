@@ -38,3 +38,8 @@ img {
     margin-bottom: 15px;
     display: inline;
 }
+
+.red-button {
+    background: rgba(249, 118, 118, 0.5);
+    color: white;
+  }
