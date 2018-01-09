@@ -3,19 +3,19 @@
 <div class="container">
     <div class="row">
         <div class="col-md-3">
-            <p class="lead">Region</p>
+            <p class="lead">Here's its place of origin.</p>
             <div id="map">
                 
             </div>
         </div>
         <div class="col-md-9">
             <div class="thumbnail">
-                <img class="img-responsive wine-image" src="<%= wines.image %>">
+                <img class="img-responsive" src="<%= wines.image %>">
             <div class="caption-full">
                 <h4 class="pull-right"><%= wines.location %></h4>
                 <h4><a href='#'><%= wines.name %></a></h4>
                 <p><em>Added by <%= wines.author.username %> | <span><%= wines.created.toDateString() %></span></em></p>
-                <hr>
+                <hr class="style-two">
                 <p><%= wines.description %></p>
                 <% if (currentUser && wines.author.id.equals(currentUser._id)) { %>
                     <a class="btn btn-warning btn-xs" href="/wines/<%= wines._id %>/edit">Edit Wine</a>
@@ -26,9 +26,12 @@
             </div>
             </div>
             <div class="well">
-                <div class="text-right">
+                <span class="text-left">
+                    <a class="btn btn-secondary btn-xs" href="/wines">Back to the wines!</a>
+                </span>
+                <span class="pull-right">
                     <a class="btn btn-success btn-xs" href="/wines/<%= wines._id %>/comments/new">Leave a Review</a>
-                </div>
+                </span>
                 <hr>
                 <div class="row">
                     <div class="col-md-12">
@@ -49,7 +52,7 @@
                         <button class="btn btn-xs btn-danger">Delete Comment</button>
                         </form>
                         <% } %>
-                        <hr>
+                        <hr class="">
                     <% }) %>
                     </div>
                 </div>
