@@ -6,6 +6,7 @@ const wineSchema = new mongoose.Schema({
   region: String,
   image: String,
   description: String,
+  created: { type: Date, default: Date.now },
   author: {
     id: {
       type: mongoose.Schema.Types.ObjectId,

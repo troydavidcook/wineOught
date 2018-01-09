@@ -16,7 +16,7 @@
             <div class="caption-full">
                 <h4 class="pull-right"><%= wines.region %></h4>
                 <h4><a href='#'><%= wines.name %></a></h4>
-                <p><em>Added by <%= wines.author.username %></em></p>
+                <p><em>Added by <%= wines.author.username %> | <span><%= wines.created.toDateString() %></span></em></p>
                 <hr>
                 <p><%= wines.description %></p>
                 <% if (currentUser && wines.author.id.equals(currentUser._id)) { %>
@@ -38,7 +38,7 @@
                         <p>
                             <strong><%= comment.author.username %></strong>
                         </p>
-                        <span class="pull-right">10 Days Ago</span>
+                        <span class="pull-right"><span><%= comment.created.toDateString() %></span></span>
                         <p>
                                 <%= comment.text %>
                         </p>

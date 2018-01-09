@@ -53,7 +53,7 @@ router.get('/:comment_id/edit', middleware.checkCommentOwnership, (req, res) => 
       console.log('Error: ', err);
       res.redirect('back');
     } else {
-      res.render('comments/edit', { campground_id: req.params.id, comment: fetchedComment });
+      res.render('comments/edit', { wine_id: req.params.id, comment: fetchedComment });
       // Comment edit route
     }
   });
@@ -67,7 +67,7 @@ router.put('/:comment_id', middleware.checkCommentOwnership, (req, res) => {
     if (err) {
       res.redirect('back');
     } else {
-      res.redirect(`/campgrounds/${wineId}`);
+      res.redirect(`/wines/${wineId}`);
     }
   });
 });
