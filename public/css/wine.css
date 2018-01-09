@@ -13,6 +13,12 @@ a {
     text-decoration: none;
 }
 
+hr.style-one {
+    border: 0;
+    height: 1px;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0.75), rgba(255, 255, 255, .4), rgba(0, 0, 0, 0.75));
+}
+
 hr.style-two {
     border: 0;
     height: 1px;
