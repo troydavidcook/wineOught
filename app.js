@@ -24,7 +24,7 @@ const app = express();
 
 mongoose.Promise = global.Promise;
 
-mongoose.connect('mongodb://troydavidcook:l0gical1@ds245287.mlab.com:45287/wineought', { useMongoClient: true });
+mongoose.connect('mongodb://troydavidcook:l0gical1@ds245287.mlab.com:45287/wine-ought', { useMongoClient: true });
 // mongoose.connect('mongodb://localhost/wine_ought', { useMongoClient: true });
 
 // ===============
