@@ -11,6 +11,7 @@ a {
     text-decoration: none;
 }
 
+
 .thumbnail {
     padding:0;
     /* min-height: 300px; */
@@ -48,4 +49,14 @@ a {
     background: rgba(249, 118, 118, 0.6);
     color: white;
     line-height: .65;
-  }
+}
+
+#directions {
+    margin-top: -15px;
+    font-size: 14px;
+}
+
+#map {
+    height: 400px;
+    width: 100%;
+}

@@ -20,6 +20,8 @@ const commentRoutes         = require('./routes/comments');
 const indexRoutes           = require('./routes/index');
 const wineRoutes            = require('./routes/wines');
 
+const geoApiKey = 'AIzaSyC8gIUswePQchvcJMLr2obfG020N0K0ibc';
+
 const app = express();
 
 mongoose.Promise = global.Promise;
