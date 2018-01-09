@@ -29,6 +29,11 @@ hr.style-two {
     border-radius: 0;
 }
 
+.lead {
+    text-align: center;
+    color: white;
+}
+
 /* jumbotron */
 .gradient {
     background-color: #e7e7e7;
@@ -95,7 +100,8 @@ hr.style-two {
 .red-button {
     background: rgba(249, 118, 118, 0.6);
     color: white;
-    line-height: .65;
+    line-height: 1em;
+    border: 1px solid rgba(0, 0, 0, .1);
 }
 
 .btn-secondary {
