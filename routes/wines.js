@@ -1,6 +1,7 @@
-const express = require('express');
+const express    = require('express');
 const middleware = require('../middleware');
-const Wine = require('../models/wine');
+const geocoder   = require('geocoder');
+const Wine       = require('../models/wine');
 
 const router = express.Router();
 
@@ -23,12 +24,18 @@ router.get('/new', middleware.isLoggedIn, (req, res) => {
 
 // Create new campground route
 router.post('/', middleware.isLoggedIn, (req, res) => {
+  geocoder.geocode(req.body.location, (err, data) => {
+    var lat = data.results[0].geometry.location.lat;
+    var lng = data.results[0].geometry.location.lng;
+    var location = data.results[0].formatted_address;
   // OBJECT DESTRUCTURING. Airbnb preferred for some reason.
   const reqBody =
     {
       id: req.body._id,
       name: req.body.name,
-      region: req.body.region,
+      location: location,
+      lat: lat,
+      lng: lng,
       image: req.body.image,
       description: req.body.description,
       created: req.body.created,
@@ -38,13 +45,14 @@ router.post('/', middleware.isLoggedIn, (req, res) => {
       },
     };
 
-  Wine.create(reqBody, (err) => {
-    if (err) {
-      console.log('Error: ', err);
-    } else {
-      // Redirect goes back to certain route, not a view name.
-      res.redirect('/wines');
-    }
+    Wine.create(reqBody, (err) => {
+      if (err) {
+        console.log('Error: ', err);
+      } else {
+        // Redirect goes back to certain route, not a view name.
+        res.redirect('/wines');
+      }
+    });
   });
 });
 
@@ -72,14 +80,28 @@ router.get('/:id/edit', middleware.checkWineOwnership, (req, res) => {
 });
 
 // Update route
-router.put('/:id', middleware.checkWineOwnership, (req, res) => {
-  const wineId = req.params.id;
-  Wine.findByIdAndUpdate(wineId, req.body.wine, (err, updatedWine) => {
-    if (err) {
-      console.log('Error: ', err);
-    } else {
-      res.redirect(`/wines/${wineId}`);
-    }
+router.put("/:id", function(req, res){
+  geocoder.geocode(req.body.wine.location, function (err, data) {
+    var lat = data.results[0].geometry.location.lat;
+    var lng = data.results[0].geometry.location.lng;
+    var location = data.results[0].formatted_address;
+    var newData = { 
+                    name: req.body.wine.name,
+                    image: req.body.wine.image, 
+                    description: req.body.wine.description, 
+                    location: req.body.wine.location, 
+                    lat: lat, 
+                    lng: lng,
+                  };
+    Wine.findByIdAndUpdate(req.params.id, newData, function(err, wine){
+        if(err){
+            req.flash("error", err.message);
+            res.redirect("back");
+        } else {
+            req.flash("success","Successfully Updated!");
+            res.redirect("/wines/" + wine._id);
+        }
+    });
   });
 });
 

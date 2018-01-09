@@ -12,7 +12,7 @@
             <div class="thumbnail">
                 <img class="img-responsive"  src="<%= wines.image %>">
             <div class="caption-full">
-                <h4 class="pull-right"><%= wines.region %></h4>
+                <h4 class="pull-right"><%= wines.location %></h4>
                 <h4><a href='#'><%= wines.name %></a></h4>
                 <p><em>Added by <%= wines.author.username %> | <span><%= wines.created.toDateString() %></span></em></p>
                 <hr>
@@ -62,8 +62,8 @@
     const geoApiKey = 'AIzaSyC8gIUswePQchvcJMLr2obfG020N0K0ibc';
 
     function initMap() {
-      var lat = <%= campground.lat %>;
-      var lng = <%= campground.lng %>;
+      var lat = <%= wines.lat %>;
+      var lng = <%= wines.lng %>;
       var center = {lat: lat, lng: lng };
       var map = new google.maps.Map(document.getElementById('map'), {
           zoom: 8,
@@ -71,9 +71,9 @@
           scrollwheel: false
       });
       var contentString = `
-        <strong><%= campground.name %><br />
-        <%= campground.location %></strong>
-        <p><%= campground.description %></p>
+        <strong><%= wines.name %><br />
+        <%= wines.location %></strong>
+        <p><%= wines.description %></p>
       `
       var infowindow = new google.maps.InfoWindow({
         content: contentString
@@ -87,6 +87,6 @@
       });
     }
   </script>
-  <script async defer src=`https://maps.googleapis.com/maps/api/js?key=AIzaSyC8gIUswePQchvcJMLr2obfG020N0K0ibc&callback=initMap`></script>
+  <script async defer src='https://maps.googleapis.com/maps/api/js?key=AIzaSyC8gIUswePQchvcJMLr2obfG020N0K0ibc&callback=initMap'></script>
 
 <% include ../partials/footer%>
