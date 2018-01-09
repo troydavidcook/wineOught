@@ -10,7 +10,7 @@
         </div>
         <div class="col-md-9">
             <div class="thumbnail">
-                <img class="img-responsive"  src="<%= wines.image %>">
+                <img class="img-responsive wine-image" src="<%= wines.image %>">
             <div class="caption-full">
                 <h4 class="pull-right"><%= wines.location %></h4>
                 <h4><a href='#'><%= wines.name %></a></h4>
@@ -61,6 +61,7 @@
 <script>
     const geoApiKey = 'AIzaSyC8gIUswePQchvcJMLr2obfG020N0K0ibc';
 
+    // geocode initialize map
     function initMap() {
       var lat = <%= wines.lat %>;
       var lng = <%= wines.lng %>;

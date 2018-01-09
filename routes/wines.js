@@ -25,11 +25,11 @@ router.get('/new', middleware.isLoggedIn, (req, res) => {
 // Create new campground route
 router.post('/', middleware.isLoggedIn, (req, res) => {
   geocoder.geocode(req.body.location, (err, data) => {
-    var lat = data.results[0].geometry.location.lat;
-    var lng = data.results[0].geometry.location.lng;
-    var location = data.results[0].formatted_address;
-  // OBJECT DESTRUCTURING. Airbnb preferred for some reason.
-  const reqBody =
+    let lat = data.results[0].geometry.location.lat;
+    let lng = data.results[0].geometry.location.lng;
+    let location = data.results[0].formatted_address;
+    // OBJECT DESTRUCTURING. Airbnb preferred for some reason.
+    const reqBody =
     {
       id: req.body._id,
       name: req.body.name,
@@ -80,27 +80,29 @@ router.get('/:id/edit', middleware.checkWineOwnership, (req, res) => {
 });
 
 // Update route
-router.put("/:id", function(req, res){
-  geocoder.geocode(req.body.wine.location, function (err, data) {
-    var lat = data.results[0].geometry.location.lat;
-    var lng = data.results[0].geometry.location.lng;
-    var location = data.results[0].formatted_address;
-    var newData = { 
-                    name: req.body.wine.name,
-                    image: req.body.wine.image, 
-                    description: req.body.wine.description, 
-                    location: req.body.wine.location, 
-                    lat: lat, 
-                    lng: lng,
-                  };
-    Wine.findByIdAndUpdate(req.params.id, newData, function(err, wine){
-        if(err){
-            req.flash("error", err.message);
-            res.redirect("back");
-        } else {
-            req.flash("success","Successfully Updated!");
-            res.redirect("/wines/" + wine._id);
-        }
+router.put('/:id', (req, res) => {
+  const wineId = req.params.id;
+  geocoder.geocode(req.body.wine.location, (err, data) => {
+    let lat = data.results[0].geometry.location.lat;
+    let lng = data.results[0].geometry.location.lng;
+    let location = data.results[0].formatted_address;
+    const latLng = { lat, lng };
+    const newData =
+     {
+       name: req.body.wine.name,
+       image: req.body.wine.image,
+       description: req.body.wine.description,
+       location: req.body.wine.location,
+       latLng,
+     };
+    Wine.findByIdAndUpdate(req.params.id, newData, (err, wine) => {
+      if (err) {
+        req.flash('error', err.message);
+        res.redirect('back');
+      } else {
+        req.flash('success', 'Successfully Updated!');
+        res.redirect(`/wines/${wineId}`);
+      }
     });
   });
 });
