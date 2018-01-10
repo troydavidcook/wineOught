@@ -1,6 +1,7 @@
 body {
     /* background: rgba(245, 245, 245, 1); */
     background: rgba(1, 1, 1, .8);
+    font-family: 'Lora', serif;
 }
 
 img {
@@ -100,7 +101,7 @@ hr.style-two {
 .red-button {
     background: rgba(249, 118, 118, 0.6);
     color: white;
-    line-height: 1em;
+    line-height: 1.5em;
     border: 1px solid rgba(0, 0, 0, .1);
 }
 

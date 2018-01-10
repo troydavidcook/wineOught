@@ -18,10 +18,12 @@
                     <textarea class="form-control" type="text" name="wine[description]"><%= wine.description %></textarea>
                 </div>
                 <div class="form-group">
-                    <button class="btn btn-xs btn-default btn-primary btn-block">Submit</button>
+                    <button class="btn btn-xs btn-default btn-primary btn-block red-button">Edit Wine</button>
                 </div>     
             </form>
-            <a href="/wines/<%= wine._id %>">Go Back to wines.</a> 
+            <span class="text-left">
+                <a class="btn btn-secondary btn-xs" id="btn-secondary-white" href="/wines/<%= wine._id %>">Back to the wines!</a>
+            </span> 
         </div>
       </div>
   </div>  
