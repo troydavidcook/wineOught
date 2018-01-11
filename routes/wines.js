@@ -83,6 +83,10 @@ router.get('/:id/edit', middleware.checkWineOwnership, (req, res) => {
 router.put('/:id', (req, res) => {
   const wineId = req.params.id;
   geocoder.geocode(req.body.wine.location, (err, data) => {
+    if (err) {
+      req.flash('error', 'Couldn\'t find location.');
+      res.redirect('back');
+    }
     let lat = data.results[0].geometry.location.lat;
     let lng = data.results[0].geometry.location.lng;
     let location = data.results[0].formatted_address;
