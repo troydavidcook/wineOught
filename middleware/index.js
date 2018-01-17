@@ -16,7 +16,7 @@ middlewareObj.checkWineOwnership = function checkWineOwnership(req, res, next) {
   if (req.isAuthenticated()) {
     Wine.findById(wineId, (err, fetchedWine) => {
       if (err) {
-        req.flash('error', 'Campground not found');
+        req.flash('error', 'Wine not found');
         res.redirect('back');
       } else if (fetchedWine.author.id.equals(req.user._id)) {
         next();

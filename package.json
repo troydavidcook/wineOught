@@ -5,7 +5,8 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
-    "test": "echo \"Error: no test specified\" */**"
+    "test": "mocha server/**/*.test.js",
+    "test-watch": "nodemon --exec 'npm test'"
   },
   "author": "Troy David Cook",
   "license": "ISC",
@@ -29,6 +30,7 @@
     "path": "^0.12.7"
   },
   "devDependencies": {
+    "expect": "^22.0.6",
     "mocha": "^4.1.0",
     "morgan": "^1.9.0",
     "supertest": "^3.0.0"
