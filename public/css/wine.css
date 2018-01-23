@@ -49,6 +49,10 @@ hr.style-two {
     background-image: repeating-radial-gradient(ellipse farthest-corner at center center,rgb(252, 252, 252) 0%,rgb(210, 210, 210) 98.4%,rgb(210, 210, 210) 99.4%,rgb(210, 210, 210) 100%,rgb(255, 255, 255) 100%,rgb(255, 255, 255) 100%);
     background-image: -ms-repeating-radial-gradient(center center, ellipse farthest-corner,rgb(252, 252, 252) 0%,rgb(210, 210, 210) 98.4%,rgb(210, 210, 210) 99.4%,rgb(210, 210, 210) 100%,rgb(255, 255, 255) 100%,rgb(255, 255, 255) 100%);
 }
+
+/* .row {
+    height: 500px;
+} */
  
 /* IE8- CSS hack */
 @media \0screen\,screen\9 {

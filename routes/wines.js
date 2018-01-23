@@ -66,6 +66,7 @@ router.get('/:id', (req, res) => {
       console.log('Error: ', err);
     } else {
       // Setting the object 'wines' to what we retrieved by 'findById()';
+      console.log(fetchedWine);
       res.render('wines/show', { wines: fetchedWine });
     }
   });
