@@ -113,6 +113,10 @@ hr.style-two {
     border: .5px solid rgba(1, 1, 1, 0.25);
 }
 
+#date {
+    display: inline;
+}
+
 #btn-secondary-white {
     color: white;
     border: .5px solid rgba(250, 250, 250, 1);

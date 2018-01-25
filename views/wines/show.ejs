@@ -40,7 +40,7 @@
                         <p>
                             <strong><%= comment.author.username %></strong>
                         </p>
-                        <span class="pull-right"><span><%= comment.created.toDateString() %></span></span>
+                        <span class="pull-right" id="date"> <%= comment.created.toDateString() %> </span>
                         <p>
                                 <%= comment.text %>
                         </p>
